@@ -16,7 +16,7 @@ const Feed = () => {
       const res = await axios.get("posts/timeline/654ec38cb68a14c94b1758eb");
       setPosts(res.data)
     };
-    fetchData();
+    fetchData(); 
   })
   return (
     <Feedd>

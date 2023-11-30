@@ -21,6 +21,7 @@
     "react-router-dom": "^6.20.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.0.8",
+    "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -50,5 +51,5 @@
   "devDependencies": {
     "prettier": "3.0.3"
   },
-  "proxy":"http://localhost:5000/api"
+  "proxy": "http://localhost:5000/api"
 }
