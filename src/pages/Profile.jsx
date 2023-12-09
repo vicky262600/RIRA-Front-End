@@ -74,7 +74,7 @@ const Profile = () => {
             </ProfileInfo>
           </ProfileRightTop>
           <ProfileRightBottom>
-            <Feed/> 
+            <Feed username="vikas"/> 
             <Rightbar profile/> 
           </ProfileRightBottom>
         </ProfileRight>

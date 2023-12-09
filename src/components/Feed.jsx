@@ -9,21 +9,23 @@ const Feedd = styled.div`
   flex: 5.5;
 `
 
-const Feed = () => {
+const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
+
   useEffect(()=>{
-    const fetchData = async()=>{
-      const res = await axios.get("posts/timeline/654ec38cb68a14c94b1758eb");
+    const fetchPosts = async()=>{
+      const res = username ? await axios.get("/posts/profile/" + username) : await axios.get("posts/timeline/654ec38cb68a14c94b1758eb");
       setPosts(res.data)
     };
-    fetchData(); 
-  })
+    fetchPosts(); 
+  }, [username]);
+
   return (
     <Feedd>
         <Share/>
         {
           posts.map(item=>(
-            <Post item={item} Key={item.id}/>
+            <Post item={item} key={item._id}/>
           ))
         }
     </Feedd>
