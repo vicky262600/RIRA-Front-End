@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 // import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -54,7 +54,7 @@ const Title = styled.div`
   cursor: pointer;
   font-weight: bold;  
   `
-  const Right = styled.div`
+  const Right = styled.form`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -82,6 +82,11 @@ const LoginTitle = styled.h1`
 `
 
 const Login = () => {
+  const email = useRef();
+  const password = useRef();
+  const handleClick = (e) =>{
+    e.preventDefault();
+  }
   return (
     <Loginn>
         <Card>
@@ -96,10 +101,10 @@ const Login = () => {
               {/* </Link> */}
             </Text>
         </Left>
-        <Right>
+        <Right onSubmit={handleClick}>
             <LoginTitle>Login</LoginTitle>
-            <Input type='text' placeholder= "Username" />
-            <Input type='password' placeholder= "Password" />
+            <Input type='email' placeholder= "Email" ref={email} required/>
+            <Input type='password' placeholder= "Password" ref={password} required minLength="6"/>
             <Buttonlogin>Login</Buttonlogin>
         </Right>
         </Card>

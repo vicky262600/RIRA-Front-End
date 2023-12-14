@@ -80,7 +80,7 @@ const Span = styled.span`
 `
 
 
-const Rightbar = ({profile}) => {
+const Rightbar = ({user}) => {
 
   const HomeRightbar = ()   =>{
     return(
@@ -105,15 +105,15 @@ const Rightbar = ({profile}) => {
         <RightbarInfo>
           <RightbarInfoItem>
             <RightBarInfoKey>City:</RightBarInfoKey>
-            <RightBarInfoValue>Sarnia</RightBarInfoValue>
+            <RightBarInfoValue>{user.city}</RightBarInfoValue>
           </RightbarInfoItem>
           <RightbarInfoItem>
             <RightBarInfoKey>From:</RightBarInfoKey>
-            <RightBarInfoValue>Rajasthan</RightBarInfoValue>
+            <RightBarInfoValue>{user.from}</RightBarInfoValue>
           </RightbarInfoItem>
           <RightbarInfoItem>
             <RightBarInfoKey>Relationship:</RightBarInfoKey>
-            <RightBarInfoValue>Single</RightBarInfoValue>
+            <RightBarInfoValue>{user.relationship}</RightBarInfoValue>
           </RightbarInfoItem>
         </RightbarInfo>
         <RightbarTitle2>User Friends</RightbarTitle2>
@@ -154,7 +154,7 @@ const Rightbar = ({profile}) => {
   return (
     <Rightbarr>
         <Rightbarwraper>
-          {profile ? <ProfileRightbar/> : <HomeRightbar/>}
+          {user ? <ProfileRightbar/> : <HomeRightbar/>}
         </Rightbarwraper>
     </Rightbarr>
   )
