@@ -1,6 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 // import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { loginCall } from '../apiCalls'
+import {AuthContext} from '../context/AuthContext'
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const Loginn = styled.div`
   height: 100vh;
@@ -84,9 +88,15 @@ const LoginTitle = styled.h1`
 const Login = () => {
   const email = useRef();
   const password = useRef();
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+
   const handleClick = (e) =>{
     e.preventDefault();
-  }
+    loginCall({email: email.current.value, password: password.current.value}, dispatch);
+  };
+
+  console.log(user);
+
   return (
     <Loginn>
         <Card>
@@ -105,7 +115,7 @@ const Login = () => {
             <LoginTitle>Login</LoginTitle>
             <Input type='email' placeholder= "Email" ref={email} required/>
             <Input type='password' placeholder= "Password" ref={password} required minLength="6"/>
-            <Buttonlogin>Login</Buttonlogin>
+            <Buttonlogin>{isFetching ? <CircularProgress size="12px"/> : "Login"}</Buttonlogin>
         </Right>
         </Card>
     </Loginn>

@@ -6,16 +6,19 @@ import Profile from "./pages/Profile"
 import {
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  
+  const {user} = useContext(AuthContext)
   return (
     <Routes>
-      <Route path='/' element={ <Home/> } />
+      <Route path='/' element={user ? <Home/> : <Register/>} />
       <Route path='/profile/:username' element={<Profile/>}/>
-      <Route path='/register' element={<Register/>}/>
-      <Route path='/login' element={<Login/>}/>
+      <Route path='/register' element={user ? <Navigate to="/" /> : <Register/>}/>
+      <Route path='/login' element={user ? <Navigate to="/" /> : <Login/>}/>
     </Routes>
   );
 }
