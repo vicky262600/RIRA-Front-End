@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import styled from 'styled-components';
 import MessageIcon from '@mui/icons-material/Message';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {Link} from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Bar = styled.div`
   border: none;
@@ -96,16 +97,17 @@ const Right = styled.div`
     justify-content: center;
   `
 
-  const Profile = styled.div`
+  const Profile = styled.img`
   height: 27px;
   width: 27px;
   border-radius: 50%;
   border: 1px solide black;
-  background: url("https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg");
+  // background: url("https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg");
   background-size: cover;
   `
   
 const Topbar = () => {
+  const {user} = useContext(AuthContext);
   return (
     <Bar>
         <Left>
@@ -137,7 +139,9 @@ const Topbar = () => {
               <NotificationsIcon/>
               <Span>1</Span>
             </NotificationDiv>
-            <Profile/>
+            <Link to={`/profile/${user.username}`}>
+              <Profile src={user.profilePicture ? user.profilePicture : "https://private-user-images.githubusercontent.com/145147066/286381759-9a40c43c-cbf6-4c07-b4b7-f2a3de7ad214.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDEyMDEwNTIsIm5iZiI6MTcwMTIwMDc1MiwicGF0aCI6Ii8xNDUxNDcwNjYvMjg2MzgxNzU5LTlhNDBjNDNjLWNiZjYtNGMwNy1iNGI3LWYyYTNkZTdhZDIxNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMTI4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTEyOFQxOTQ1NTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01NjhkYmUxYzc5NjVmMDdkZDJlMzk0YTI1ODY2Y2FlNjA5ZTA0YTMyYjAzNDY0NzRhMzVmMjJhYTY5NTJlYmY0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.gHGxuPXzgVSmau_6ow3PiQ_b643r2GaEt0oNbBiB9uM"}/>            
+            </Link>
           </Icons>
         </Right>
     </Bar>

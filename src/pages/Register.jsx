@@ -1,6 +1,12 @@
-import React from 'react'
-// import { Link } from 'react-router-dom'
+import axios from 'axios'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom'
+// import { loginCall } from '../apiCalls'
+// import {AuthContext} from '../context/AuthContext'
+// import { useContext } from 'react'
+
 
 const Loginn = styled.div`
   height: 100vh;
@@ -14,9 +20,9 @@ const Card = styled.div`
   min-height: 570px;
   border-radius: 10px;
   display: flex;
-  justify-contant: center;
+  justify-content: center;
   `
-  const Left = styled.div`
+  const Left = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,7 +53,7 @@ const Card = styled.div`
   width: 50%;
   padding: 10px;
   color: purple;
-  backgorund-color: white;
+  background-color: white;
   cursor: pointer;
   font-weight: bold;  
   `
@@ -81,19 +87,43 @@ const Card = styled.div`
 `  
 
 const Register = () => {
+  const username = useRef();
+  const email = useRef();
+  const password = useRef();
+  const passwordAgain = useRef();
+  const navigate = useNavigate();
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    if (passwordAgain.current.value !== password.current.value) {
+      passwordAgain.current.setCustomValidity("Passwords don't match!");
+    } else {
+      const user = {
+        username: username.current.value,
+        email: email.current.value,
+        password: password.current.value,
+      };
+      try {
+        await axios.post("/auth/register", user);
+        navigate("/login");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <Loginn>
         <Card>
-        <Left>
+        <Left onSubmit={handleClick}>
             <LoginTitle>Register</LoginTitle>
-            <Input type='text' placeholder= "Username" />
-            <Input type='email' placeholder= "Email" />
-            <Input type='password' placeholder= "password" />
-            <Input type='text' placeholder= "Name" />
-            <Buttonlogin>Register</Buttonlogin>
+            <Input type='text' placeholder= "Username" ref={username} required/>
+            <Input type='email' placeholder= "Email" ref={email} required/>
+            <Input type='password' placeholder= "password" ref={password} minLength="6" required/>
+            <Input type='password' placeholder= "Password Again" ref={passwordAgain} minLength="6" required/>
+            <Buttonlogin type='submit'>Register</Buttonlogin>
         </Left>
-        <Right>
-            
+        <Right>        
             <Title><b>RIRA.</b></Title>
             <Text>
               <Disc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, officia! Soluta fugiat ad rerum aperiam possimus sunt ex corporis obcaecati dolores hic quos, accusamus ea exercitationem saepe earum blanditiis minus! </Disc>
