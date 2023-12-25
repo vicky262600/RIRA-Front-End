@@ -1,9 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useContext, useState, useRef } from 'react';
+import styled from 'styled-components';
 import PermMediaTwoToneIcon from '@mui/icons-material/PermMediaTwoTone';
 import LabelTwoToneIcon from '@mui/icons-material/LabelTwoTone';
 import LocationOnTwoToneIcon from '@mui/icons-material/LocationOnTwoTone';
-import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone';
+import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone'; 
+import {AuthContext} from '../context/AuthContext';
+import axios from "axios";
 
 const Sharee = styled.div`
     width: 100%;
@@ -30,14 +32,17 @@ const Image = styled.img`
     cursor: pointer;
 `
 const Input = styled.input`
-    border: none;
-    padding: 10px;
+border: none;
+padding: 10px;
+`
+const InputPhoto = styled.input`
+
 `
 const Hr = styled.hr`
     margin-top: 20px;
     color: lightgray;
 `
-const Media = styled.div`
+const Media = styled.form`
     display: flex;
     padding: 15px;
     justify-content: space-between;
@@ -66,23 +71,43 @@ const Button = styled.button`
     border-radius: 5px;
     background-color: red;
 `
-
+const Icon1 = styled.label`
+    cursor: pointer;  
+`
 
 const Share = () => {
+    const {user} = useContext(AuthContext);
+    const [file, setFile] = useState(null);
+    const desc = useRef();
+    const submitHandler = (e) => {
+        e.preventDefault()
+        console.log(file);
+        // const newPost = {
+        //     userId: user.id,
+        //     desc: desc.current.value
+        // }
+        // try{
+        //     axios.post("/posts", newPost);
+        //     console.log(file);
+        // }catch(err){
+        //     console.log(err)
+        // }
+    }
   return (
     <Sharee>
         <Sharewraper>
             <Text>
-                <Image src="https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg" />
-                <Input placeholder="what's in your mind"/>
+                <Image src={user.profilePicture || "https://private-user-images.githubusercontent.com/145147066/286381759-9a40c43c-cbf6-4c07-b4b7-f2a3de7ad214.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDEyMDEwNTIsIm5iZiI6MTcwMTIwMDc1MiwicGF0aCI6Ii8xNDUxNDcwNjYvMjg2MzgxNzU5LTlhNDBjNDNjLWNiZjYtNGMwNy1iNGI3LWYyYTNkZTdhZDIxNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMTI4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTEyOFQxOTQ1NTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01NjhkYmUxYzc5NjVmMDdkZDJlMzk0YTI1ODY2Y2FlNjA5ZTA0YTMyYjAzNDY0NzRhMzVmMjJhYTY5NTJlYmY0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.gHGxuPXzgVSmau_6ow3PiQ_b643r2GaEt0oNbBiB9uM"} />
+                <Input placeholder={"what's in your mind " + user.username + "?"} ref={desc}/>
             </Text>
             <Hr/>
-            <Media>
+            <Media onSubmit={submitHandler}>
                 <Icons>
-                    <Icon>
+                    <Icon1 htmlFor='file'>
                       <PermMediaTwoToneIcon/>
                       <Span>Photo or Vider</Span>
-                    </Icon>
+                      <InputPhoto type="file" style={{ display: "none"}} id='file' accept=".png,.jpeg,.jpg" onChange={(e)=> setFile(e.target.files[0])}/>
+                    </Icon1>
                     <Icon>
                       <LabelTwoToneIcon/>
                       <Span>Tag</Span>
@@ -96,7 +121,7 @@ const Share = () => {
                       <Span>Feeling</Span>
                     </Icon>
                 </Icons>
-                <Button>Share</Button>
+                <Button type="submit">Share</Button>
             </Media>
         </Sharewraper>
     </Sharee>

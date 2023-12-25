@@ -3,9 +3,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CommentIcon from '@mui/icons-material/Comment';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { format } from 'timeago.js';
+import {AuthContext} from '../context/AuthContext'
 import {Link} from 'react-router-dom';
 // import { Users } from '../Dummydata';
 
@@ -89,6 +90,11 @@ const Post = ({item}) => {
     const [isLiked,setIsLiked] = useState(false);
     const [icon, setIcon] = useState(<FavoriteBorderIcon/>);
     const [user, setUser] = useState({});
+    const {user:currentUser} = useContext(AuthContext);
+
+    useEffect(()=>{
+        setIsLiked(item.like.includes(currentUser._id));
+    }, [currentUser._id, item.like]);
 
     useEffect(()=>{
     const fetchUser = async()=>{
@@ -99,6 +105,11 @@ const Post = ({item}) => {
   }, [item.userId]);
 
     const likeHandler =() => {
+        try{
+            axios.put("/posts/"+ item._id +"/like", {userId:currentUser._id})
+        }catch(err){
+
+        }
         setLike(isLiked ? like-1 : like+1);
         setIcon(isLiked ? <FavoriteBorderIcon/> : <FavoriteIcon/>)
         setIsLiked(!isLiked); // in this line !isLiked just changing(oppositeing) the value of isLiked 

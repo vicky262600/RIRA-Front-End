@@ -35,6 +35,7 @@ const ProfileUserphoto = styled.img`
   border-radius: 50%;
   object-fit: cover;
   position: absolute;
+  background-color: white;
   // https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg
   left: 0;
   right: 0;
