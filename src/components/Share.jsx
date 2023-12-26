@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef} from 'react';
 import styled from 'styled-components';
 import PermMediaTwoToneIcon from '@mui/icons-material/PermMediaTwoTone';
 import LabelTwoToneIcon from '@mui/icons-material/LabelTwoTone';
@@ -6,6 +6,8 @@ import LocationOnTwoToneIcon from '@mui/icons-material/LocationOnTwoTone';
 import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone'; 
 import {AuthContext} from '../context/AuthContext';
 import axios from "axios";
+import { storage } from "../firebase";
+import {ref, uploadBytes, listAll, getDownloadURL} from "firebase/storage";
 
 const Sharee = styled.div`
     width: 100%;
@@ -78,20 +80,48 @@ const Icon1 = styled.label`
 const Share = () => {
     const {user} = useContext(AuthContext);
     const [file, setFile] = useState(null);
+    const storageRef = ref(storage, 'image/');
     const desc = useRef();
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
-        console.log(file);
-        // const newPost = {
-        //     userId: user.id,
-        //     desc: desc.current.value
-        // }
-        // try{
-        //     axios.post("/posts", newPost);
-        //     console.log(file);
-        // }catch(err){
-        //     console.log(err)
-        // }
+        const newPost = {
+            userId: user._id,
+            desc: desc.current.value
+        }   
+            if (file) {
+                const imageRef = ref(storage, `image/${Date.now() + file.name}`);
+                const metadata = {
+                  customMetadata: {
+                    timestamp: new Date().toISOString(),
+                  },
+                };
+            
+                try {
+                  await uploadBytes(imageRef, file, metadata);            
+                  const files = await listAll(storageRef);
+                  const sortedFiles = files.items.sort((a, b) => {
+                    const timestampA = parseInt(a.name.split('_')[0]);
+                    const timestampB = parseInt(b.name.split('_')[0]);
+                    return timestampB - timestampA;
+                  });
+            
+                  if (sortedFiles.length > 0) {
+                    const lastUploadedFile = sortedFiles[0];
+                    console.log('Last uploaded file:', lastUploadedFile);
+                    console.log(lastUploadedFile);
+                    const downloadURL = await getDownloadURL(lastUploadedFile);
+                    console.log('Download URL:', downloadURL);
+                    newPost.img = downloadURL;
+                    console.log(newPost)
+                  } else {
+                    console.log('No files found in the storage path.');
+                  }
+                  await axios.post('/posts', newPost);
+                  window.location.reload();
+                } catch (err) {
+                  console.error('Error:', err);
+                }
+            }  
     }
   return (
     <Sharee>

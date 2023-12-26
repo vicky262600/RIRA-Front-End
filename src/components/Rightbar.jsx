@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Online from './Online'
 import { Users } from '../Dummydata'
+import axios from 'axios'
+
 
 const Rightbarr = styled.div`
   flex: 3.5;
@@ -52,10 +54,9 @@ const RightBarInfoValue = styled.span`
   font-weight: 300;
 `
 const RightbarFollowings = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
 `
 
 const RightbarFollowing = styled.div`
@@ -63,6 +64,7 @@ const RightbarFollowing = styled.div`
   flex-direction: column;
   margin-bottom: 20px;
   cursor: pointer;
+  margin: 12px;
 `
 const RightbarTitle2 = styled.h4`
   font-size: 18px;
@@ -79,8 +81,21 @@ const Span = styled.span`
   
 `
 
+const Rightbar = ({ user }) => {
+  
+  const [friends, setFriends] = useState([]);
 
-const Rightbar = ({user}) => {
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const friendList = await axios.get("/users/friends/" + user._id);
+        setFriends(friendList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriends();
+  }, [user]);
 
   const HomeRightbar = ()   =>{
     return(
@@ -118,34 +133,12 @@ const Rightbar = ({user}) => {
         </RightbarInfo>
         <RightbarTitle2>User Friends</RightbarTitle2>
         <RightbarFollowings>
+          {friends.map((friend)=>(
           <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
-          <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
-          <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
-          <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
-          <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
-          <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
-          <RightbarFollowing>
-            <RightProfile src='https://user-images.githubusercontent.com/145147066/272936528-c4072f24-deb4-4cd7-b4b1-2f8e9a9f90d7.jpg'></RightProfile>
-            <Span>Harsh</Span>
-          </RightbarFollowing>
+            <RightProfile src={friend.profilePicture ||  "https://private-user-images.githubusercontent.com/145147066/286381759-9a40c43c-cbf6-4c07-b4b7-f2a3de7ad214.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDEyMDEwNTIsIm5iZiI6MTcwMTIwMDc1MiwicGF0aCI6Ii8xNDUxNDcwNjYvMjg2MzgxNzU5LTlhNDBjNDNjLWNiZjYtNGMwNy1iNGI3LWYyYTNkZTdhZDIxNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMTI4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTEyOFQxOTQ1NTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01NjhkYmUxYzc5NjVmMDdkZDJlMzk0YTI1ODY2Y2FlNjA5ZTA0YTMyYjAzNDY0NzRhMzVmMjJhYTY5NTJlYmY0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.gHGxuPXzgVSmau_6ow3PiQ_b643r2GaEt0oNbBiB9uM"}></RightProfile>
+            <Span>{friend.username}</Span>
+          </RightbarFollowing>      
+          ))}                
         </RightbarFollowings>
       </ProfileRightbarr>
 
