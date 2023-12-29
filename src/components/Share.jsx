@@ -8,10 +8,11 @@ import {AuthContext} from '../context/AuthContext';
 import axios from "axios";
 import { storage } from "../firebase";
 import {ref, uploadBytes, listAll, getDownloadURL} from "firebase/storage";
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const Sharee = styled.div`
     width: 100%;
-    height: 160px;
+    // height: 160px;
     margin-top: 15px;
     border-radius: 10px;
     -webkit-box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.68);
@@ -76,7 +77,14 @@ const Button = styled.button`
 const Icon1 = styled.label`
     cursor: pointer;  
 `
-
+const Shareimgcon = styled.div`
+padding: 0 20px 10px 20px;
+position: relative;
+`
+const Imgg = styled.img`
+width: 100%;
+object-fit: cover;
+`
 const Share = () => {
     const {user} = useContext(AuthContext);
     const [file, setFile] = useState(null);
@@ -131,6 +139,12 @@ const Share = () => {
                 <Input placeholder={"what's in your mind " + user.username + "?"} ref={desc}/>
             </Text>
             <Hr/>
+            {file && (
+              <Shareimgcon>
+                <Imgg src={URL.createObjectURL(file)}/>
+                <CancelIcon style={{ position: 'absolute', top: 0, right: '20px', cursor: 'pointer', opacity: 0.7}} onClick={() => setFile(null)}/>
+              </Shareimgcon>
+            )}
             <Media onSubmit={submitHandler}>
                 <Icons>
                     <Icon1 htmlFor='file'>

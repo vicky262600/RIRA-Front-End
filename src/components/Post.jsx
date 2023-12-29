@@ -32,6 +32,7 @@ const Heading = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 `
 const Image = styled.img`
 width: 40px;
@@ -84,6 +85,22 @@ const Commentscount = styled.span`
 const LikeIcon = styled.div`
 
 `
+const Dropdown = styled.div`
+    position: relative;
+`
+const Dropdownmenu = styled.div`
+    position: absolute;
+    right: 0;
+    padding: 0.75rem;
+    background-color: white;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    width: 5.8rem;
+    display: none;
+    transform: translateY(-10px);
+    transition: opacity 150ms ease-in-out, transform: 150ms ease-in-out;
+    cursor: pointer;
+`
 
 const Post = ({item}) => {
     const [like, setLike] = useState(item.like.length);
@@ -114,6 +131,20 @@ const Post = ({item}) => {
         setIcon(isLiked ? <FavoriteBorderIcon/> : <FavoriteIcon/>)
         setIsLiked(!isLiked); // in this line !isLiked just changing(oppositeing) the value of isLiked 
     }
+
+    const deleteMenu = () => {
+        const dropdown = document.getElementById('menu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    const deletPost = () => {
+        try{
+            
+        }catch(err){
+            console.log(err);
+        }
+    }
+
   return (
     <Postt>
         <Postwraper>
@@ -130,7 +161,12 @@ const Post = ({item}) => {
                         console.log(evenNumbers); // Output: [2, 4, 6, 8, 10] */}
                     <Time> {format(item.createdAt)}</Time>
                 </Profileheading>
-                <MoreVertIcon/>
+                <Dropdown>
+                    <MoreVertIcon style={{ cursor: 'pointer' }} onClick={deleteMenu}/>
+                    <Dropdownmenu id='menu' onClick={deletPost}>
+                        Delete Post
+                    </Dropdownmenu>
+                </Dropdown>
             </Heading>
             <Postdiv>
                 <Disc>{item.desc}</Disc>

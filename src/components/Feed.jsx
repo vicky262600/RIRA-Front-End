@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import Share from './Share';
-import axios from "axios"
-import Post from "./Post"
+import axios from "axios";
+import Post from "./Post";
+import { AuthContext } from '../context/AuthContext';
 // import { posts } from '../Dummydata';
 
 const Feedd = styled.div`
@@ -11,20 +12,23 @@ const Feedd = styled.div`
 
 const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(()=>{
     const fetchPosts = async()=>{
-      const res = username ? await axios.get("/posts/profile/" + username) : await axios.get("posts/timeline/654ec38cb68a14c94b1758eb");
+      const res = username 
+      ? await axios.get("/posts/profile/" + username)
+      : await axios.get("/posts/timeline/" + user._id);
       setPosts(res.data.sort((p1, p2)=>{
         return new Date(p2.createdAt) - new Date(p1.createdAt)
       }));
     };
     fetchPosts(); 
-  }, [username]);
+  }, [username, user._id]);
 
   return (
     <Feedd>
-        <Share/>
+        {(!username || username === user.username) && <Share />}
         {
           posts.map(item=>(
             <Post item={item} key={item._id}/>

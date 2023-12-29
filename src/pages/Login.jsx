@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { loginCall } from '../apiCalls'
 import {AuthContext} from '../context/AuthContext'
@@ -106,9 +106,9 @@ const Login = () => {
               <Disc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, officia! Soluta fugiat ad rerum aperiam possimus sunt ex corporis obcaecati dolores hic quos, accusamus ea exercitationem saepe earum blanditiis minus! </Disc>
               <Spam>Do not have an account?</Spam>
               {/* react router established */}
-              {/* <Link to="/register"> */}
+              <Link to="/register">
                 <Button>Register</Button>
-              {/* </Link> */}
+              </Link>
             </Text>
         </Left>
         <Right onSubmit={handleClick}>

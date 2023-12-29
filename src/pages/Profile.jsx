@@ -66,7 +66,7 @@ const Profile = () => {
   useEffect(()=>{
     const fetchUser = async()=>{
       const res = await axios.get(`/users?username=${username}`);
-      setUser(res.data)
+      setUser(res.data);
     };
     fetchUser();
   }, [username]);

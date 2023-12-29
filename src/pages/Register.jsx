@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 // import { loginCall } from '../apiCalls'
 // import {AuthContext} from '../context/AuthContext'
 // import { useContext } from 'react'
@@ -129,9 +129,9 @@ const Register = () => {
               <Disc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, officia! Soluta fugiat ad rerum aperiam possimus sunt ex corporis obcaecati dolores hic quos, accusamus ea exercitationem saepe earum blanditiis minus! </Disc>
               <Spam>Do you have an account?</Spam>
               {/* react router established */}
-              {/* <Link to="/login"> */}
+              <Link to="/login">
                 <Button>Login</Button>
-              {/* </Link> */}
+              </Link>
             </Text>
         </Right>
         </Card>

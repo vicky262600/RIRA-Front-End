@@ -108,7 +108,7 @@ const Right = styled.div`
   `
   
 const Topbar = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <Bar>
         <Left>
