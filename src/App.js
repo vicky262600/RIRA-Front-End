@@ -12,13 +12,12 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import axios from 'axios';
 
-axios.get('https://rira-api.vercel.app/api/some-endpoint')
-  .then(response => console.log(response.data))
-  .catch(error => console.error('Error:', error));
-
 
 function App() {
-  const {user} = useContext(AuthContext)
+  const {user} = useContext(AuthContext);
+  axios.get('https://rira-api.vercel.app/api/some-endpoint')
+  .then(response => console.log(response.data))
+  .catch(error => console.error('Error:', error));
   return (
     <Routes>
       <Route path='/' element={user ? <Home/> : <Register/>} />
