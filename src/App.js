@@ -10,6 +10,12 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import axios from 'axios';
+
+axios.get('https://your-backend-url/api/some-endpoint')
+  .then(response => console.log(response.data))
+  .catch(error => console.error('Error:', error));
+
 
 function App() {
   const {user} = useContext(AuthContext)

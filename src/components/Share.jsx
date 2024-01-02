@@ -135,7 +135,7 @@ const Share = () => {
     <Sharee>
         <Sharewraper>
             <Text>
-                <Image src={user.profilePicture || "https://peach-advisory-zebra-318.mypinata.cloud/ipfs/QmT64bZ8iGeqwwvng1HsbTWvmPSB8SDagqMecYycRhCP8f"} />
+                <Image src={user.profilePicture || 'https://peach-advisory-zebra-318.mypinata.cloud/ipfs/QmT64bZ8iGeqwwvng1HsbTWvmPSB8SDagqMecYycRhCP8f'} />
                 <Input placeholder={"what's in your mind " + user.username + "?"} ref={desc}/>
             </Text>
             <Hr/>
