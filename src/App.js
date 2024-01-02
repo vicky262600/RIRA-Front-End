@@ -12,7 +12,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import axios from 'axios';
 
-axios.get('https://your-backend-url/api/some-endpoint')
+axios.get('https://rira-api.vercel.app/api/some-endpoint')
   .then(response => console.log(response.data))
   .catch(error => console.error('Error:', error));
 
