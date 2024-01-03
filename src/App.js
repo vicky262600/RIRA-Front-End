@@ -8,16 +8,19 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import axios from 'axios';
 
 
 function App() {
   const {user} = useContext(AuthContext);
-  axios.get('https://rira-api.vercel.app/api/some-endpoint')
-  .then(response => console.log(response.data))
-  .catch(error => console.error('Error:', error));
+  useEffect(() => {
+    // Make API call when the component mounts
+    axios.get('https://rira-api.vercel.app/api/auth/register')
+      .then(response => console.log(response.data))
+      .catch(error => console.error('Error:', error));
+  }, []);
   return (
     <Routes>
       <Route path='/' element={user ? <Home/> : <Register/>} />
