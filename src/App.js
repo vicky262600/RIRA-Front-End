@@ -17,7 +17,7 @@ function App() {
   const {user} = useContext(AuthContext);
   useEffect(() => {
     // Make API call when the component mounts
-    axios.get('https://rira-api.vercel.app/api/auth/register')
+    axios.post('https://rira-api.vercel.app/api/auth/login')
       .then(response => console.log(response.data))
       .catch(error => console.error('Error:', error));
   }, []);
