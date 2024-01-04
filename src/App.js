@@ -14,6 +14,7 @@ import axios from 'axios';
 
 
 function App() {
+  axios.defaults.withCredentials = true;
   const {user} = useContext(AuthContext);
   useEffect(() => {
     // Make API call when the component mounts
