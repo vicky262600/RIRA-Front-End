@@ -70,7 +70,7 @@ const Profile = () => {
     };
     fetchUser();
   }, [username]);
-
+  console.log(user, "yoyo")
   return (
     <div>
       <Topbar/>
