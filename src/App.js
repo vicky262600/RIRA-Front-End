@@ -16,12 +16,12 @@ import axios from 'axios';
 function App() {
   axios.defaults.withCredentials = true;
   const {user} = useContext(AuthContext);
-  // useEffect(() => {
-  //   // Make API call when the component mounts
-  //   axios.post('https://rira-api.vercel.app/api/auth/login')
-  //     .then(response => console.log(response.data))
-  //     .catch(error => console.error('Error:', error));
-  // }, []);
+  useEffect(() => {
+    // Make API call when the component mounts
+    axios.post('https://rira-api.vercel.app/api/auth/login')
+      .then(response => console.log(response.data))
+      .catch(error => console.error('Error:', error));
+  }, []);
   return (
     <Routes>
       <Route path='/' element={user ? <Home/> : <Register/>} />
